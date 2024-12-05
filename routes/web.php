@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ControllerForDashboard;
+use App\Http\Controllers\Instructor;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,11 +34,19 @@ Route::get('/dashboard', [ControllerForDashboard::class, 'index'])->middleware([
 Route::get('/add-student', [ControllerForDashboard::class, 'addStudent'])->name('add.addStudent');
 Route::post('/add-student', [ControllerForDashboard::class, 'addStudentPost'])->name('add.addStudentPost');
 Route::get('/add-instructor', [ControllerForDashboard::class, 'addInstructor'])->name('add.addInstructor');
-Route::post('/add-student', [ControllerForDashboard::class, 'addInstructorPost'])->name('add.addInstructorPost');
+Route::post('/add-instructor', [ControllerForDashboard::class, 'addInstructorPost'])->name('add.addInstructorPost');
 Route::get('view-users/{id}', [ControllerForDashboard::class, 'viewUsers'])->name('viewUsers');
 Route::put('update-user/{id}', [ControllerForDashboard::class, 'updateUser'])->name('user.update');
 
 
+// superadmin 
+Route::get('/add-admin', [ControllerForDashboard::class, 'addAdmin'])->name('add.addAdmin');
+Route::post('/add-student', [ControllerForDashboard::class, 'addAdminPost'])->name('add.addAdminPost');
+
+
+//instructor
+Route::get('/add-subjects', [Instructor::class, 'addSubjects'])->name('add.addSubjects');
+Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('add.addSubjectsPost');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

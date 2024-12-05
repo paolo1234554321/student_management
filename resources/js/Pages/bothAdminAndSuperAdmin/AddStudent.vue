@@ -27,7 +27,6 @@ const submitForm = () => {
 };
 </script>
 <template>
-<AdminLayout >
   <Head title="Add student" />
     
      <div class="instructor-container mt-1">
@@ -111,14 +110,20 @@ const submitForm = () => {
         </div>
        
   
-        <!-- Submit Button -->
-        <div class="col-12 d-flex gap-2">
+        <div class="container d-flex gap-2 mt-4 ">
+          <!-- Submit Button -->
+        <div class="">
           <button type="submit" class="btn btn-dark">Submit</button>
           <!-- <Link :href="route('adminCreate')" class="btn btn-secondary">Back</Link> -->
         </div>
+
+        <div class="">
+           <Link :href="route('dashboard')" class="btn btn-primary"> Back</Link>
+        </div>
+        </div>
+       
       </form>
     </div>
-</AdminLayout>
 </template>
 
 <style lang="css" scoped>

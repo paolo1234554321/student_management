@@ -1,6 +1,6 @@
 <script setup>
 import { Link, useForm, Head } from '@inertiajs/vue3';
-import AdminLayout from '@/Layouts/AdminLayout.vue';
+import SuperAdminLayout from '@/Layouts/SuperAdminLayout.vue';
 
 
 const form = useForm({
@@ -16,7 +16,7 @@ const form = useForm({
 });
 
 const submitForm = () => {
-  form.post(route('add.addInstructorPost') ,{
+  form.post(route('add.addAdminPost') ,{
   onSuccess : () => alert("Data post successfully"),
   onError : (errors) => alert("Error => " + JSON.stringify(errors))
   })
@@ -24,10 +24,11 @@ const submitForm = () => {
 };
 </script>
 <template>
-  <Head title="Add student" />
+<SuperAdminLayout >
+  <Head title="Add admin" />
     
      <div class="instructor-container mt-1">
-      <h1 class="text-center">Add New Instructor</h1>
+      <h1 class="text-center">Add New Admin</h1>
       <form @submit.prevent="submitForm" class="row g-3">
         <!-- First Name -->
         <div class="col-md-4">
@@ -86,20 +87,14 @@ const submitForm = () => {
         </div>
        
   
-        <div class="container d-flex gap-2 mt-4 ">
-          <!-- Submit Button -->
-        <div class="">
+        <!-- Submit Button -->
+        <div class="col-12 d-flex gap-2">
           <button type="submit" class="btn btn-dark">Submit</button>
           <!-- <Link :href="route('adminCreate')" class="btn btn-secondary">Back</Link> -->
         </div>
-
-        <div class="">
-           <Link :href="route('dashboard')" class="btn btn-primary"> Back</Link>
-        </div>
-        </div>
-       
       </form>
     </div>
+</SuperAdminLayout>
 </template>
 
 <style lang="css" scoped>

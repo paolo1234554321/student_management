@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminModel;
 use App\Models\Instructor;
 use App\Models\Student;
 use App\Models\User;
@@ -19,22 +20,29 @@ class ControllerForDashboard extends Controller
                 'allUsers' => $users
             ]); 
             }
-            // else if (Auth::check() && Auth::user()->type === 'superadmin') { 
-            //     return Inertia::render('superadmin/Home', [
-            //     'announcement' => $announcement,
-            //     'allUsers' => $users
-            // ]); 
-            // }else if (Auth::check() && Auth::user()->type === 'instructor') { 
-            //     return Inertia::render('instructor/InstructorDashboard', [
-            //     'announcement' => $announcement,
-            // ]); 
-            // }else if (Auth::check() && Auth::user()->type === 'student') {
-               
+            else if (Auth::check() && Auth::user()->type === 'superadmin') { 
+                return Inertia::render('superadmin/Dashboard', [
+                'allUsers' => $users
+            ]); 
+            }
+            else if (Auth::check() && Auth::user()->type === 'instructor') { 
+                return Inertia::render('instructor/Dashboard', [
+                'allUsers' => $users
+            ]); 
+            }
+            else if (Auth::check() && Auth::user()->type === 'student') {
+                $user = User::find(Auth::user()->id);
+                $data2 = Student::find(Auth::user()->id);
 
-            //     return Inertia::render('student/Student', [
-            //     'announcement' => $announcement,
-            // ]); 
-            // }
+                $data = [
+                    'data1' => $user,
+                    'data2' => $data2
+                ];
+                return Inertia::render('student/Dashboard', [
+                    'id' => Auth::user()->id,
+                    'user' => $data
+                ]); 
+            }
             return Inertia::render('Dashboard', [
                 // 'announcement' => $announcement,
             ]);
@@ -95,7 +103,7 @@ class ControllerForDashboard extends Controller
              "password" => "required|string:max:255",
              "type" => "required|string:max:255"
          ]);
- 
+         
          $instructor = User::create([
              'name' => $validate['first_name'] . ' ' . $validate['last_name'] . ' ' . $validate['middle_name'],
              'email' => $validate['email'],
@@ -131,4 +139,41 @@ class ControllerForDashboard extends Controller
             'user' => $user
         ]);
     }
+
+    // super admin 
+    public function addAdmin(){
+        return Inertia::render('superadmin/AddAdmin');
+    }
+
+    public function addAdminPost(Request $request){
+        $validate = $request->validate([
+             "first_name" => "required|string:max:255",
+             "middle_name" => "required|string:max:255",
+             "last_name" => "required|string:max:255",
+             "date_of_birth" => "required|date",
+             "gender" => "required|string:max:255", 
+             "phone_number" => "required|string:max:255",
+             "email" => "required|email|unique:users,email",
+             "password" => "required|string:max:255",
+             "type" => "required|string:max:255"
+         ]);
+         
+         $admin = User::create([
+             'name' => $validate['first_name'] . ' ' . $validate['last_name'] . ' ' . $validate['middle_name'],
+             'email' => $validate['email'],
+             'type' => 'admin',
+             'password' => Hash::make($validate['password']),
+         ]);
+ 
+            AdminModel::create([
+             'id' => $admin->id,
+             'date_of_birth' => $validate['date_of_birth'],
+             'gender' => $validate['gender'],
+             'phone_number' => $validate['phone_number'],
+ 
+         ]);
+         
+     }
+
+
 }
