@@ -44,9 +44,12 @@ Route::get('/add-admin', [ControllerForDashboard::class, 'addAdmin'])->name('add
 Route::post('/add-student', [ControllerForDashboard::class, 'addAdminPost'])->name('add.addAdminPost');
 
 
+
 //instructor
 Route::get('/add-subjects', [Instructor::class, 'addSubjects'])->name('add.addSubjects');
-Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('add.addSubjectsPost');
+Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
+Route::get('/view-subjects', [Instructor::class, 'viewSubjects'])->name('view.subjects');
+// Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

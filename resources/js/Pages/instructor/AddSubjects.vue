@@ -3,22 +3,20 @@ import { Link, useForm } from '@inertiajs/vue3';
 import InstructorLayout from '@/Layouts/InstructorLayout.vue';
 
 
-// const form = useForm({
-//     name: props.user.name,
-//     email: props.user.email,
-//     type: props.user.type, 
-// });
+const form = useForm({
+    subject_name: "",
+});
 
-// const submit = () => {
-//     form.put(route('user.update', props.user.id), {
-//         onSuccess: () => {
-//             console.log("User updated successfully");
-//         },
-//         onError: (errors) => {
-//             console.log("Update failed:", errors);
-//         },
-//     });
-// };
+const submit = () => {
+    form.post(route('subject.add'), {
+        onSuccess: () => {
+            alert("subject added successfully");
+        },
+        onError: (errors) => {
+            console.log("Update failed:", errors);
+        },
+    });
+};
 </script>
 
 <template>
@@ -26,27 +24,14 @@ import InstructorLayout from '@/Layouts/InstructorLayout.vue';
     <div class="main-container d-flex flex-row mt-5 align-items-center flex-column">
         <div class="container">
             <form @submit.prevent="submit" class="form">
-                <label>Name: </label>
+                <label>Subject name: </label>
                 <input
                     type="text"
                     placeholder="Name"
                     class="form-control mb-2"
-                    v-model="form.name"
+                    v-model="form.subject_name"
                 />
-                <label>Email: </label>
-                <input
-                    type="text"
-                    placeholder="Email"
-                    class="form-control mb-2"
-                    v-model="form.email"
-                />
-                <label>Type: </label>
-                <input
-                    type="text"
-                    class="form-control mb-2"
-                    v-model="form.type"
-                    disabled
-                />
+               
 
                 <button class="btn btn-primary me-3" type="submit" :disabled="form.processing">
                     Submit Edited
