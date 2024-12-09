@@ -1,6 +1,7 @@
 <script setup>
     import InstructorLayout from "@/Layouts/InstructorLayout.vue";
     import { Head, Link, useForm } from "@inertiajs/vue3";
+    // import route from "vendor/tightenco/ziggy/src/js";
     import { onMounted, ref } from "vue";
 
 
@@ -11,6 +12,9 @@
         }
     })
     const subject = ref([])
+    const deleteSubForm = useForm({
+      id: ''
+    })
    const form = useForm({
     name: '',
     id: ''
@@ -24,14 +28,31 @@
     console.log('sub => ' + subject.value)
 
     const getTheIdToEdit = (id, name) => {
-        form.id = id
-        form.name = name
-
+         form.name = name
+         form.id = id
+         console.log("form => " + JSON.stringify(form.name))
+         console.log("data => " + id + ' ' + name)
+    }
+    const submitForm = () => {
+        form.put(route('edit.subjects', form.id),{
+        onSuccess: () => console.log('Successfully update') ,
+        onError: () => console.log('an error occured')
+        })  
+    }
+    const getTheId = (idGet) => {
+      deleteSubForm.id = idGet;
+    }
+    const deleteSubject = () => {
+      deleteSubForm.delete(route('delete.subjects', deleteSubForm.id),{
+      //  onSuccess: () => alert('deleted') ,
+      // onError: () => console.log('an error occured')
+      }
+      )
     }
 </script>
 
 <template>
-  <Head title="superadmin dashboard" />
+  <Head title="instructor dashboard" />
   <InstructorLayout>
     <div class="container mx-5 mt-5 ">
         <h1 class="text-dark text-center     mb-2">View Subjects </h1>
@@ -47,10 +68,10 @@
             <td >{{data.id}}</td>
             <td >{{data.subject_name}}</td>
             <td>
-                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="getTheIdToEdit(data.id,data.subject_name)">Edit</div>
+                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="getTheIdToEdit(data.id, data.subject_name)">Edit</div>
             </td>
             <td>
-                <div class="btn btn-warning">Delete</div>
+                <div class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#deleteSub" @click="getTheId(data.id)">Delete</div>
             </td>
            
           </tr>
@@ -77,10 +98,28 @@
          </div>
         
         <div class="d-flex gap-2 mt-3">
-             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Done</button>
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary"  data-bs-dismiss="modal">Submit edited</button>
         </div>
        </form>
+      </div>
+       
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal To delete sub -->
+<div class="modal fade" id="deleteSub" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-body d-flex justify-content-between align-items-center">
+       <div> <p class="text-dark">Are you sure you want to delete the subject?</p></div>
+      <div class="d-flex">
+        <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-primary" @click="deleteSubject()" data-bs-dismiss="modal">Yes</button>
+      </div>
       </div>
        
     </div>

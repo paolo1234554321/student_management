@@ -34,7 +34,7 @@ const submit = () => {
                
 
                 <button class="btn btn-primary me-3" type="submit" :disabled="form.processing">
-                    Submit Edited
+                    Submit
                 </button>
                 <Link :href="route('dashboard')" class="btn btn-dark">Back</Link>
             </form>

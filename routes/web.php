@@ -49,6 +49,8 @@ Route::post('/add-student', [ControllerForDashboard::class, 'addAdminPost'])->na
 Route::get('/add-subjects', [Instructor::class, 'addSubjects'])->name('add.addSubjects');
 Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
 Route::get('/view-subjects', [Instructor::class, 'viewSubjects'])->name('view.subjects');
+Route::delete('/delete-subjects/{id}', [Instructor::class, 'deleteSubject'])->name('delete.subjects');
+Route::put('/edit-subjects/{sub}', [Instructor::class, 'editSubjects'])->name('edit.subjects');
 // Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
 
 Route::middleware('auth')->group(function () {

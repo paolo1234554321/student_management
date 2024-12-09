@@ -26,4 +26,35 @@ class Instructor extends Controller
             'subjects' => $subjects
         ]);
     }
+
+    public function deleteSubject($id){
+        $sub = SubjectModel::all();
+        $subject = SubjectModel::find($id);
+        $subject->delete($id);
+
+        // return Inertia::render('instructor/ViewSubjects', [
+        //     'subjects' => $sub
+        // ]);
+
+        return redirect()->route('view.subjects');
+
+    }
+
+        public function editSubjects(Request $request, SubjectModel $sub){
+
+            $request->validate([
+                'name' => 'required|string|max:255'
+            ]);
+            $sub->update([
+                'name' => $request->name
+            ]); 
+
+            // return Inertia::render('instructor/ViewSubjects', [
+            //     'subjects' => $sub
+            // ]);
+
+            // return redirect()->route('view.subjects');
+            return back()->with('success', 'Subject updated successfully.');
+        }
+    
 }

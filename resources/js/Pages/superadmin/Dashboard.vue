@@ -38,7 +38,10 @@ onMounted(() => {
           <tr v-for="data in users" :key="data.index">
             <td>{{data.name}}</td>
             <td>{{ data.email}}</td>
-            <td>{{ data.type}}</td>
+            <td >
+              <span v-if="data.type !== 'user'">{{ data.type}} </span>
+              <span v-if="data.type === 'user'">-- </span>
+            </td>
             <td>
                 <Link :href="route('viewUsers', {'id' : data.id})" class="btn btn-primary" :class="{'disabled' : data.type === 'admin' || data.type === 'superadmin'}">View</Link>
             </td>

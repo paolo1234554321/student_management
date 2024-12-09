@@ -43,8 +43,9 @@ class ControllerForDashboard extends Controller
                     'user' => $data
                 ]); 
             }
+            $user = User::find(Auth::user()->id);
             return Inertia::render('Dashboard', [
-                // 'announcement' => $announcement,
+                'user' => $user,
             ]);
 
            
