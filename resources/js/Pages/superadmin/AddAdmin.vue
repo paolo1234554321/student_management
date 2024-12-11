@@ -85,13 +85,19 @@ const submitForm = () => {
           <label for="password" class="form-label">Password</label>
           <input type="text" id="password" class="form-control" v-model="form.password" required />
         </div>
-       
-  
-        <!-- Submit Button -->
-        <div class="col-12 d-flex gap-2">
-          <button type="submit" class="btn btn-dark">Submit</button>
-          <!-- <Link :href="route('adminCreate')" class="btn btn-secondary">Back</Link> -->
+        
+        <div class="container d-flex gap-2 mt-4">
+         <!-- Submit Button -->
+        <div>
+           <button type="submit" class="btn btn-dark">Submit</button>
+           <!-- <Link :href="route('adminCreate')" class="btn btn-secondary">Back</Link> -->
         </div>
+  
+        <div>
+        <Link :href="route('dashboard')" class="btn btn-primary">Back</Link>
+       </div>
+       </div>
+
       </form>
     </div>
 </SuperAdminLayout>
