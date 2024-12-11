@@ -1,6 +1,6 @@
 <script setup>
 import SuperAdminLayout from "@/Layouts/SuperAdminLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 
@@ -18,6 +18,17 @@ onMounted(() => {
 }
 
 )
+
+const deleteForm = useForm({
+  id: ''
+})
+
+const deleteUser = (id) => {
+  deleteForm.delete(route('deleteUser', id), {
+    onSuccess: () => alert('deleted'),
+    onError: (errors) => console.log("an error occured" + errors)
+  })
+}
 
 </script>
 
@@ -43,7 +54,8 @@ onMounted(() => {
               <span v-if="data.type === 'user'">-- </span>
             </td>
             <td>
-                <Link :href="route('viewUsers', {'id' : data.id})" class="btn btn-primary" :class="{'disabled' : data.type === 'admin' || data.type === 'superadmin'}">View</Link>
+                <Link :href="route('viewUsersAsSuperAdmin', {'id' : data.id})" class="btn btn-primary me-2" :class="{'disabled' :  data.type === 'superadmin'}">View</Link>
+                <button class="btn btn-warning" @click="deleteUser(data.id)"  :class="{'disabled' : data.type === 'superadmin'}">Delete</button>
             </td>
           </tr>
         </tbody>

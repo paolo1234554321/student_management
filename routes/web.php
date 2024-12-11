@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ControllerForDashboard;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\ProfileController;
@@ -31,13 +32,14 @@ Route::get('/dashboard', [ControllerForDashboard::class, 'index'])->middleware([
 
 
 // Both admin and super admin can do 
-Route::get('/add-student', [ControllerForDashboard::class, 'addStudent'])->name('add.addStudent');
-Route::post('/add-student', [ControllerForDashboard::class, 'addStudentPost'])->name('add.addStudentPost');
+Route::get('/add-student-route', [ControllerForDashboard::class, 'addStudent'])->name('add.addStudent');
+Route::post('/add-student-post', [ControllerForDashboard::class, 'addStudentPost'])->name('add.addStudentPost');
 Route::get('/add-instructor', [ControllerForDashboard::class, 'addInstructor'])->name('add.addInstructor');
 Route::post('/add-instructor', [ControllerForDashboard::class, 'addInstructorPost'])->name('add.addInstructorPost');
 Route::get('view-users/{id}', [ControllerForDashboard::class, 'viewUsers'])->name('viewUsers');
+Route::get('view-users-as-super-admin/{id}', [ControllerForDashboard::class, 'viewUsersAsSuperAdmin'])->name('viewUsersAsSuperAdmin');
 Route::put('update-user/{id}', [ControllerForDashboard::class, 'updateUser'])->name('user.update');
-
+Route::delete('/delete-user/{id}', [ControllerForDashboard::class, 'deleteUser'])->name('deleteUser');
 
 // superadmin 
 Route::get('/add-admin', [ControllerForDashboard::class, 'addAdmin'])->name('add.addAdmin');
@@ -50,7 +52,7 @@ Route::get('/add-subjects', [Instructor::class, 'addSubjects'])->name('add.addSu
 Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
 Route::get('/view-subjects', [Instructor::class, 'viewSubjects'])->name('view.subjects');
 Route::delete('/delete-subjects/{id}', [Instructor::class, 'deleteSubject'])->name('delete.subjects');
-Route::put('/edit-subjects/{sub}', [Instructor::class, 'editSubjects'])->name('edit.subjects');
+Route::put('/edit-subjects/{id}', [Instructor::class, 'editSubjects'])->name('edit.subjects');
 // Route::post('/add-subjects', [Instructor::class, 'addSubjectsPost'])->name('subject.add');
 
 Route::middleware('auth')->group(function () {

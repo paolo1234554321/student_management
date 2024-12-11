@@ -108,7 +108,7 @@ class ControllerForDashboard extends Controller
          $instructor = User::create([
              'name' => $validate['first_name'] . ' ' . $validate['last_name'] . ' ' . $validate['middle_name'],
              'email' => $validate['email'],
-             'type' => 'student',
+             'type' => 'instructor',
              'password' => Hash::make($validate['password']),
          ]);
  
@@ -129,13 +129,21 @@ class ControllerForDashboard extends Controller
         ]);
     }
 
+    public function viewUsersAsSuperAdmin($id){
+        $user = User::find($id);
+        return Inertia::render('ViewUserAsSuper', [
+            'user' => $user
+        ]);
+    }
+
     public function updateUser(Request $request, $id){
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
+            'type' => 'nullable',
         ]);
         $user = User::find($id);
-        $user->update($request->only('name', 'email'));
+        $user->update($request->only('name', 'email', 'type'));
         return Inertia::render('bothAdminAndSuperAdmin/ViewUser', [
             'user' => $user
         ]);
@@ -174,6 +182,12 @@ class ControllerForDashboard extends Controller
  
          ]);
          
+     }
+
+     public function deleteUser($id){
+        $user = User::find($id);
+        $user->delete();
+        // return redirect('')
      }
 
 

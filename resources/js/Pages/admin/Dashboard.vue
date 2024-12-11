@@ -1,6 +1,6 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 
@@ -16,8 +16,17 @@ onMounted(() => {
     users.value = props.allUsers
 
 }
-
 )
+const deleteForm = useForm({
+  id: ''
+})
+
+const deleteUser = (id) => {
+  deleteForm.delete(route('deleteUser', id), {
+    onSuccess: () => alert('deleted'),
+    onError: (errors) => console.log("an error occured" + errors)
+  })
+}
 
 </script>
 
@@ -41,7 +50,8 @@ onMounted(() => {
             <td>{{ data.email}}</td>
             <td>{{ data.type}}</td>
             <td>
-                <Link :href="route('viewUsers', {'id' : data.id})" class="btn btn-primary" :class="{'disabled' : data.type === 'admin'}">View</Link>
+                <Link :href="route('viewUsers', {'id' : data.id})" class="btn btn-primary" :class="{'disabled' : data.type === 'admin' || data.type === 'superadmin'}">View</Link>
+                <button class="btn btn-warning" @click="deleteUser(data.id)" :class="{'disabled' : data.type === 'admin' || data.type === 'superadmin'}">Delete</button>
             </td>
           </tr>
         </tbody>

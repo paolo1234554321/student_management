@@ -34,6 +34,7 @@
          console.log("data => " + id + ' ' + name)
     }
     const submitForm = () => {
+      // console.log("the data is " + form)
         form.put(route('edit.subjects', form.id),{
         onSuccess: () => console.log('Successfully update') ,
         onError: () => console.log('an error occured')

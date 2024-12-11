@@ -28,7 +28,7 @@
   <Head title="superadmin dashboard" />
   <InstructorLayout>
     <div class="container mx-5 mt-5 ">
-        <h1 class="text-dark text-center     mb-2">All Users </h1>
+        <h1 class="text-dark text-center     mb-2">All Students </h1>
       <table class="table table-striped table-responsive table-bordered">
         <thead>
           <th>Name</th>

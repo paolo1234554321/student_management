@@ -24,7 +24,7 @@ const submitForm = () => {
 };
 </script>
 <template>
-  <Head title="Add student" />
+  <Head title="Add instructor" />
     
      <div class="instructor-container mt-1">
       <h1 class="text-center">Add New Instructor</h1>

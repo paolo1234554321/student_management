@@ -40,21 +40,28 @@ class Instructor extends Controller
 
     }
 
-        public function editSubjects(Request $request, SubjectModel $sub){
-
-            $request->validate([
-                'name' => 'required|string|max:255'
-            ]);
-            $sub->update([
-                'name' => $request->name
-            ]); 
-
-            // return Inertia::render('instructor/ViewSubjects', [
-            //     'subjects' => $sub
-            // ]);
-
-            // return redirect()->route('view.subjects');
-            return back()->with('success', 'Subject updated successfully.');
+    public function editSubjects(Request $request, $id) {
+        // Fetch the subject by ID
+        $subject = SubjectModel::find($id);
+    
+        // Check if the subject exists
+        if (!$subject) {
+            return back()->with('error', 'Subject not found.');
         }
+    
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+    
+        // Update the subject with the new name
+        $subject->update([
+            'subject_name' => $request->name,
+        ]);
+    
+        // Redirect back with a success message
+        return back()->with('success', 'Subject updated successfully.');
+    }
+    
     
 }
